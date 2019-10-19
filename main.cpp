@@ -25,17 +25,14 @@ matrix createCoinMatrix(const int& amountOfCoins, const int& bill){
     for(int j = 0; j < amountOfCoins + 1; j++){
         vector<int> row;
         row.resize(bill+1);
-        for(int i = 0; i < bill+1; i++){
+        for(int i = 0; i < bill + 1; i++){
             row[i] = 0;
         }
         m[j] = row;
     }
-    for(int i = 0; i < m.size();i++){
+    for(int i = 0; i < bill + 1;i++){
         m[0][i] = i;
     }
-
-
-
     return m;
 }
 
@@ -83,6 +80,9 @@ vector<int> recreateCoinsBeingUsed(const vector<int>& coins, matrix& m){
     while(m[row][column] > 0){
         int& currentCell = m[row][column];
         int currentCoin = coins[row - 1];
+        if(row == 0){
+            break;
+        }
         if(currentCell == m[row-1][column]){
             row--;
         }else{
@@ -100,10 +100,10 @@ int main() {
     int testCases;
     cin >> testCases;
     for(int testCase= 0; testCase < testCases;testCase++) {
-        int n,c;
+        int n, c;
         cin >> n;
         cin >> c;
-        int& bill = c;
+        int &bill = c;
         vector<int> coins;
         coins.resize(n);
         for(int coin = 0; coin < n; coin++){
@@ -115,6 +115,7 @@ int main() {
         for (int n: result) {
             cout << n << " ";
         }
+        cout << endl;
     }
     return 0;
 }
